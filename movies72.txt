@@ -1,20 +1,20 @@
-The Godfather | Marlon Brando, Al Pacino | Crime Drama | mafia family corleone crime godfather
-The Shawshank Redemption | Tim Robbins, Morgan Freeman | Drama | prison friendship hope redemption
-Forrest Gump | Tom Hanks, Robin Wright | Drama Romance | forrest life friendship history america
-Pulp Fiction | John Travolta, Samuel L Jackson | Crime Drama | crime gangster hitmen pulp fiction
-Fight Club | Brad Pitt, Edward Norton | Drama Thriller | fight club identity rebellion narrator
-Goodfellas | Robert De Niro, Ray Liotta | Crime Drama | mafia gangster henry hill crime
-The Green Mile | Tom Hanks, Michael Clarke Duncan | Drama Fantasy | prison miracle death row supernatural
-The Departed | Leonardo DiCaprio, Matt Damon | Crime Thriller | undercover police mafia boston
-Gladiator | Russell Crowe, Joaquin Phoenix | Action Drama | roman gladiator maximus colosseum revenge
-Braveheart | Mel Gibson, Sophie Marceau | Historical Drama | william wallace scotland freedom war
-Saving Private Ryan | Tom Hanks, Matt Damon | War Drama | world war soldiers normandy rescue
-Schindlers List | Liam Neeson, Ben Kingsley | Historical Drama | holocaust schindler germany war survival
-The Prestige | Hugh Jackman, Christian Bale | Mystery Drama | magicians rivalry illusion prestige
-The Wolf of Wall Street | Leonardo DiCaprio, Jonah Hill | Crime Comedy | wall street stockbroker jordan corruption
-American Psycho | Christian Bale, Willem Dafoe | Psychological Thriller | patrick bateman finance murder identity
-The Social Network | Jesse Eisenberg, Andrew Garfield | Drama | facebook technology startup harvard
-Whiplash | Miles Teller, J K Simmons | Drama Music | drummer jazz teacher ambition
-The Truman Show | Jim Carrey, Laura Linney | Comedy Drama | truman television reality simulation
-Catch Me If You Can | Leonardo DiCaprio, Tom Hanks | Crime Drama | fraud con artist fbi identity
-The Pianist | Adrien Brody, Thomas Kretschmann | Historical Drama | pianist war poland survival
+Jurassic Park | Sam Neill, Laura Dern | Adventure Sci-Fi | dinosaurs park genetics island
+The Lost World Jurassic Park | Jeff Goldblum, Julianne Moore | Adventure Sci-Fi | dinosaurs island expedition jurassic
+Jurassic Park III | Sam Neill, William H Macy | Adventure Sci-Fi | dinosaurs rescue island jurassic
+Jurassic World | Chris Pratt, Bryce Dallas Howard | Adventure Sci-Fi | dinosaurs park island raptors
+Jurassic World Fallen Kingdom | Chris Pratt, Bryce Dallas Howard | Adventure Sci-Fi | dinosaurs volcano island rescue
+Jurassic World Dominion | Chris Pratt, Bryce Dallas Howard | Adventure Sci-Fi | dinosaurs biosyn locusts world
+Jumanji | Robin Williams, Kirsten Dunst | Adventure Fantasy | jungle game board jumanji
+Jumanji Welcome to the Jungle | Dwayne Johnson, Kevin Hart | Adventure Comedy | jumanji game jungle avatar
+Jumanji The Next Level | Dwayne Johnson, Kevin Hart | Adventure Comedy | jumanji game jungle adventure
+The Mummy | Brendan Fraser, Rachel Weisz | Adventure Fantasy | mummy egypt imhotep treasure
+The Mummy Returns | Brendan Fraser, Rachel Weisz | Adventure Fantasy | mummy egypt scorpion king
+The Mummy Tomb of the Dragon Emperor | Brendan Fraser, Jet Li | Adventure Fantasy | mummy china dragon emperor
+National Treasure | Nicolas Cage, Diane Kruger | Adventure Mystery | treasure history declaration liberty
+National Treasure Book of Secrets | Nicolas Cage, Diane Kruger | Adventure Mystery | treasure lincoln book history
+Pirates of the Caribbean Curse of the Black Pearl | Johnny Depp, Orlando Bloom | Adventure Fantasy | pirates jack sparrow black pearl
+Pirates of the Caribbean Dead Mans Chest | Johnny Depp, Orlando Bloom | Adventure Fantasy | pirates davy jones kraken
+Pirates of the Caribbean At Worlds End | Johnny Depp, Orlando Bloom | Adventure Fantasy | pirates jack sparrow east india
+Pirates of the Caribbean On Stranger Tides | Johnny Depp, Penelope Cruz | Adventure Fantasy | pirates fountain youth blackbeard
+Pirates of the Caribbean Dead Men Tell No Tales | Johnny Depp, Javier Bardem | Adventure Fantasy | pirates jack sparrow salazar
+The Last Samurai | Tom Cruise, Ken Watanabe | Historical Action | samurai japan war honor
