@@ -1,0 +1,21 @@
+Title | Actors | Genre | Keywords
+Swayamvaram | Madhu, Sharada | Drama | marriage, unemployment, middle class, life
+Kodiyettam | Bharath Gopi, K.P.A.C. Lalitha | Drama | village, transformation, ordinary life, adulthood
+Elippathayam | Karamana Janardanan Nair, Jalaja | Drama | family, feudalism, isolation, decay
+Kummatty | Ravi Menon, Ashokan | Fantasy, Drama | folklore, children, magician, village
+Thampu | Jalaja, Nedumudi Venu | Drama | circus, village, performers, life
+Uttarayanam | Kalamandalam Gopi, Balan K. Nair | Drama | politics, freedom, society, history
+Kanchana Sita | Ravimenon, Chinnapuliah | Drama, Mythology | Ramayana, exile, duty, mythology
+Panchavadi Palam | Nedumudi Venu, Bharath Gopi | Comedy, Satire | politics, bridge, corruption, satire
+Apoorva Raagam | K.P. Ummer, Sheela | Drama | family, relationships, secrets, society
+Rathinirvedam | Krishnachandran, Jayabharathi | Drama, Romance | adolescence, desire, village, relationships
+Thoovanathumbikal | Mohanlal, Sumalatha | Romance, Drama | love, relationships, rain, choices
+Yavanika | Bharath Gopi, Jalaja | Mystery, Drama | theatre, murder, investigation, secrets
+Aravindante Athidhikal | Mohanlal, Shobana | Drama | family, relationships, childhood, mystery
+Aalkkoottathil Thaniye | Mammootty, Mohanlal | Drama | family, relationships, loneliness, society
+Meesa Madhavan | Dileep, Kavya Madhavan | Comedy, Romance | village, theft, love, family
+Madanolsavam | Kamal Haasan, Zarina Wahab | Romance, Drama | love, music, relationships, emotion
+Peruvazhiyambalam | Ashokan, Bharath Gopi | Drama | revenge, youth, village, conflict
+Cheriyachante Kroora Krithyangal | Kottarakkara Sreedharan Nair, Balan K. Nair | Drama, Satire | family, society, cruelty, satire
+Chuvanna Vithukal | Madhu, Jayabharathi | Drama | politics, land, family, conflict
+Kaliyugam | Mammootty, Seema | Drama | society, poverty, politics, struggle

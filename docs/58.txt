@@ -1,0 +1,21 @@
+Title | Actors | Genre | Keywords
+Swayamvaram | Madhu, Sharada | Drama | marriage, unemployment, middle class, life
+Kodiyettam | Bharath Gopi, K.P.A.C. Lalitha | Drama | village, transformation, ordinary life, adulthood
+Elippathayam | Karamana Janardanan Nair, Jalaja | Drama | family, feudalism, isolation, decay
+Thampu | Jalaja, Nedumudi Venu | Drama | circus, village, performers, life
+Uttarayanam | Kalamandalam Gopi, Balan K. Nair | Drama | politics, freedom, society, history
+Kanchana Sita | Ravimenon, Chinnapuliah | Drama, Mythology | Ramayana, exile, duty, mythology
+Peruvazhiyambalam | Ashokan, Bharath Gopi | Drama | revenge, youth, village, conflict
+Mathilukal | Mammootty, Murali | Drama, Romance | prison, letters, loneliness, love
+Vidheyan | Mammootty, Gopalakrishnan | Drama | landlord, servant, power, oppression
+Ponthan Mada | Mammootty, Naseeruddin Shah | Drama, Historical | colonialism, friendship, class, Kerala
+Pathemari | Mammootty, Jewel Mary | Drama | migration, Gulf, family, sacrifice
+Unda | Mammootty, Shine Tom Chacko | Comedy, Drama | police, election, duty, teamwork
+Take Off | Parvathy Thiruvothu, Kunchacko Boban | Drama, Thriller | nurses, Iraq, war, rescue
+Uyare | Parvathy Thiruvothu, Tovino Thomas | Drama, Romance | aviation, resilience, career, empowerment
+Virus | Kunchacko Boban, Parvathy Thiruvothu | Drama, Thriller | epidemic, doctors, Kerala, teamwork
+Nayattu | Kunchacko Boban, Joju George | Crime, Thriller | police, politics, election, survival
+Jana Gana Mana | Prithviraj Sukumaran, Suraj Venjaramoodu | Legal, Political | courtroom, justice, politics, crime
+The Great Indian Kitchen | Nimisha Sajayan, Suraj Venjaramoodu | Drama | marriage, patriarchy, household, freedom
+Home | Indrans, Sreenath Bhasi | Drama, Comedy | family, technology, relationships, parents
+2018 | Tovino Thomas, Kunchacko Boban | Disaster, Drama | flood, Kerala, rescue, survival
