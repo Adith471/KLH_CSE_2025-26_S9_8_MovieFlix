@@ -1,0 +1,21 @@
+Title | Actors | Genre | Keywords
+The Shawshank Redemption | Tim Robbins, Morgan Freeman | Drama | prison, friendship, hope, freedom
+The Dark Knight | Christian Bale, Heath Ledger | Action, Crime, Drama | batman, joker, superhero, crime
+Inception | Leonardo DiCaprio, Joseph Gordon-Levitt | Action, Sci-Fi, Thriller | dreams, mind, heist, reality
+Interstellar | Matthew McConaughey, Anne Hathaway | Sci-Fi, Drama | space, time, black hole, future
+Titanic | Leonardo DiCaprio, Kate Winslet | Romance, Drama | ship, love, ocean, disaster
+Avatar | Sam Worthington, Zoe Saldana | Action, Adventure, Sci-Fi | alien, planet, nature, war
+Avengers: Endgame | Robert Downey Jr., Chris Evans | Action, Adventure, Sci-Fi | superheroes, marvel, time travel, battle
+Jurassic Park | Sam Neill, Laura Dern | Adventure, Sci-Fi | dinosaurs, island, park, survival
+The Matrix | Keanu Reeves, Laurence Fishburne | Action, Sci-Fi | virtual reality, robots, technology, future
+Forrest Gump | Tom Hanks, Robin Wright | Drama, Romance | life, friendship, war, journey
+The Godfather | Marlon Brando, Al Pacino | Crime, Drama | mafia, family, power, business
+Gladiator | Russell Crowe, Joaquin Phoenix | Action, Drama | roman, warrior, revenge, empire
+Spider-Man: No Way Home | Tom Holland, Zendaya | Action, Adventure, Sci-Fi | spider-man, multiverse, superheroes, villains
+The Lion King | Matthew Broderick, Jeremy Irons | Animation, Adventure, Drama | lion, family, kingdom, animals
+Frozen | Kristen Bell, Idina Menzel | Animation, Adventure, Comedy | ice, princess, sister, kingdom
+Toy Story | Tom Hanks, Tim Allen | Animation, Comedy, Adventure | toys, friendship, childhood, adventure
+Finding Nemo | Albert Brooks, Ellen DeGeneres | Animation, Adventure, Comedy | ocean, fish, family, journey
+Harry Potter and the Sorcerer's Stone | Daniel Radcliffe, Emma Watson | Fantasy, Adventure | magic, wizard, school, friendship
+Iron Man | Robert Downey Jr., Gwyneth Paltrow | Action, Sci-Fi | superhero, technology, armor, marvel
+Black Panther | Chadwick Boseman, Michael B. Jordan | Action, Adventure, Sci-Fi | wakanda, superhero, king, technology
