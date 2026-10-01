@@ -1,54 +1,74 @@
-public class AhoCorasick {
+import java.util.*;
 
-    private static final int ALPHABET_SIZE = 128;
+public class AhoCorasick {
 
     private static class Node {
 
-        int[] next;
+        Map<Character, Integer> next;
+
         int fail;
+
         boolean output;
 
         Node() {
 
-            next = new int[ALPHABET_SIZE];
-
-            for (int i = 0; i < ALPHABET_SIZE; i++) {
-                next[i] = -1;
-            }
+            next = new HashMap<>();
 
             fail = 0;
+
             output = false;
         }
     }
 
     private Node[] nodes;
+
     private int size;
 
     public AhoCorasick(String[] patterns) {
 
         int totalLength = 1;
 
-        for (int i = 0; i < patterns.length; i++) {
-            totalLength += patterns[i].length();
+        if (patterns != null) {
+
+            for (String pattern : patterns) {
+
+                if (pattern != null) {
+                    totalLength += pattern.length();
+                }
+            }
         }
 
         nodes = new Node[totalLength + 1];
 
         for (int i = 0; i < nodes.length; i++) {
+
             nodes[i] = new Node();
         }
 
         size = 1;
 
         buildTrie(patterns);
+
         buildFailureLinks();
     }
 
     private void buildTrie(String[] patterns) {
 
-        for (int p = 0; p < patterns.length; p++) {
+        if (patterns == null) {
+            return;
+        }
 
-            String pattern = patterns[p].toLowerCase();
+        for (String pattern : patterns) {
+
+            if (pattern == null) {
+                continue;
+            }
+
+            pattern = pattern.trim().toLowerCase();
+
+            if (pattern.isEmpty()) {
+                continue;
+            }
 
             int current = 0;
 
@@ -56,17 +76,22 @@ public class AhoCorasick {
 
                 char c = pattern.charAt(i);
 
-                if (c >= ALPHABET_SIZE) {
-                    continue;
-                }
+                Integer nextNode =
+                        nodes[current].next.get(c);
 
-                if (nodes[current].next[c] == -1) {
+                if (nextNode == null) {
 
-                    nodes[current].next[c] = size;
+                    nextNode = size;
+
+                    nodes[current].next.put(
+                            c,
+                            nextNode
+                    );
+
                     size++;
                 }
 
-                current = nodes[current].next[c];
+                current = nextNode;
             }
 
             nodes[current].output = true;
@@ -75,72 +100,104 @@ public class AhoCorasick {
 
     private void buildFailureLinks() {
 
-        int[] queue = new int[size];
+        Queue<Integer> queue =
+                new LinkedList<>();
 
-        int front = 0;
-        int rear = 0;
+        // First level nodes
+        for (int next :
+                nodes[0].next.values()) {
 
-        for (int c = 0; c < ALPHABET_SIZE; c++) {
+            nodes[next].fail = 0;
 
-            int next = nodes[0].next[c];
-
-            if (next != -1) {
-
-                nodes[next].fail = 0;
-                queue[rear++] = next;
-
-            } else {
-
-                nodes[0].next[c] = 0;
-            }
+            queue.add(next);
         }
 
-        while (front < rear) {
+        while (!queue.isEmpty()) {
 
-            int current = queue[front++];
+            int current = queue.poll();
 
-            for (int c = 0; c < ALPHABET_SIZE; c++) {
+            for (Map.Entry<Character, Integer> entry :
+                    nodes[current].next.entrySet()) {
 
-                int next = nodes[current].next[c];
+                char character =
+                        entry.getKey();
 
-                if (next != -1) {
+                int child =
+                        entry.getValue();
 
-                    nodes[next].fail =
-                            nodes[nodes[current].fail].next[c];
+                int failure =
+                        nodes[current].fail;
 
-                    if (nodes[nodes[next].fail].output) {
-                        nodes[next].output = true;
-                    }
+                while (failure != 0
+                        && !nodes[failure].next
+                        .containsKey(character)) {
 
-                    queue[rear++] = next;
+                    failure =
+                            nodes[failure].fail;
+                }
+
+                if (nodes[failure].next
+                        .containsKey(character)
+                        && nodes[failure].next
+                        .get(character) != child) {
+
+                    nodes[child].fail =
+                            nodes[failure].next
+                                    .get(character);
 
                 } else {
 
-                    nodes[current].next[c] =
-                            nodes[nodes[current].fail].next[c];
+                    nodes[child].fail = 0;
                 }
+
+                if (nodes[nodes[child].fail].output) {
+
+                    nodes[child].output = true;
+                }
+
+                queue.add(child);
             }
         }
     }
 
     public boolean search(String text) {
 
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+
         text = text.toLowerCase();
 
         int current = 0;
 
-        for (int i = 0; i < text.length(); i++) {
+        for (int i = 0;
+             i < text.length();
+             i++) {
 
             char c = text.charAt(i);
 
-            if (c >= ALPHABET_SIZE) {
-                current = 0;
-                continue;
+            while (current != 0
+                    && !nodes[current].next
+                    .containsKey(c)) {
+
+                current =
+                        nodes[current].fail;
             }
 
-            current = nodes[current].next[c];
+            Integer next =
+                    nodes[current].next.get(c);
+
+            if (next != null) {
+
+                current = next;
+
+            } else {
+
+                current = 0;
+            }
 
             if (nodes[current].output) {
+
                 return true;
             }
         }
