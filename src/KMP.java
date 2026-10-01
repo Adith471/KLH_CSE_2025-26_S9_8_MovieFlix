@@ -34,12 +34,20 @@ public class KMP {
 
     public static boolean search(String text, String pattern) {
 
-        if (pattern == null || pattern.length() == 0) {
-            return true;
+        if (text == null || pattern == null) {
+            return false;
         }
 
         text = text.toLowerCase();
         pattern = pattern.toLowerCase();
+
+        if (pattern.isEmpty()) {
+            return true;
+        }
+
+        if (text.isEmpty()) {
+            return false;
+        }
 
         int[] lps = buildLPS(pattern);
 
@@ -60,8 +68,11 @@ public class KMP {
             } else {
 
                 if (j != 0) {
+
                     j = lps[j - 1];
+
                 } else {
+
                     i++;
                 }
             }
@@ -70,14 +81,24 @@ public class KMP {
         return false;
     }
 
-    public static int searchPosition(String text, String pattern) {
+    public static int searchPosition(
+            String text,
+            String pattern) {
 
-        if (pattern == null || pattern.length() == 0) {
-            return 0;
+        if (text == null || pattern == null) {
+            return -1;
         }
 
         text = text.toLowerCase();
         pattern = pattern.toLowerCase();
+
+        if (pattern.isEmpty()) {
+            return 0;
+        }
+
+        if (text.isEmpty()) {
+            return -1;
+        }
 
         int[] lps = buildLPS(pattern);
 
@@ -98,8 +119,11 @@ public class KMP {
             } else {
 
                 if (j != 0) {
+
                     j = lps[j - 1];
+
                 } else {
+
                     i++;
                 }
             }
