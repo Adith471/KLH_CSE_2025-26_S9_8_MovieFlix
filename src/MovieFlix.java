@@ -105,6 +105,10 @@ public class MovieFlix {
         }
     }
 
+    // =========================================================
+    // MENU
+    // =========================================================
+
     private static void showMenu() {
 
         System.out.println();
@@ -147,7 +151,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // 1. KMP SEARCH
+    // 1. KMP PATTERN SEARCH
     // =========================================================
 
     private static void kmpSearch()
@@ -208,7 +212,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // 2. AHO-CORASICK SEARCH
+    // 2. AHO-CORASICK MULTI-KEYWORD SEARCH
     // =========================================================
 
     private static void ahoSearch()
@@ -300,7 +304,8 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // 3. FUZZY SEARCH - LEVENSHTEIN
+    // 3. FUZZY MOVIE SEARCH
+    //    LEVENSHTEIN DISTANCE
     // =========================================================
 
     private static void fuzzySearch()
@@ -323,13 +328,14 @@ public class MovieFlix {
             return;
         }
 
-        query = query.trim();
+        query =
+                query.trim().toLowerCase();
 
         /*
-         * Maximum edit distance is controlled
+         * The edit-distance threshold is controlled
          * internally by the application.
          *
-         * The client/user does NOT enter this value.
+         * The user/client does NOT enter it.
          */
         int maxDistance = 2;
 
@@ -341,24 +347,76 @@ public class MovieFlix {
         for (MovieRecord movie :
                 movies) {
 
-            int distance =
-                    Levenshtein.distance(
-                            query,
-                            movie.getTitle()
-                    );
+            String title =
+                    movie.getTitle();
 
-            if (distance <= maxDistance) {
+            if (title == null
+                    || title.trim().isEmpty()) {
+
+                continue;
+            }
+
+            /*
+             * Split the movie title into individual
+             * words.
+             *
+             * Example:
+             *
+             * "Baahubali: The Beginning"
+             *
+             * becomes:
+             *
+             * Baahubali
+             * The
+             * Beginning
+             */
+            String[] words =
+                    title.toLowerCase()
+                            .split("[^a-z0-9]+");
+
+            int bestDistance =
+                    Integer.MAX_VALUE;
+
+            /*
+             * Compare the user's query with
+             * every individual word.
+             */
+            for (String word : words) {
+
+                if (word.isEmpty()) {
+                    continue;
+                }
+
+                int distance =
+                        Levenshtein.distance(
+                                query,
+                                word
+                        );
+
+                if (distance < bestDistance) {
+
+                    bestDistance =
+                            distance;
+                }
+            }
+
+            /*
+             * If the closest word is within
+             * the allowed edit distance,
+             * display the movie.
+             */
+            if (bestDistance <= maxDistance) {
 
                 System.out.println();
 
                 System.out.println(
                         "Title: "
-                                + movie.getTitle()
+                                + title
                 );
 
                 System.out.println(
                         "Edit distance: "
-                                + distance
+                                + bestDistance
                 );
 
                 System.out.println(movie);
@@ -385,7 +443,8 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // 4. TF-IDF + COSINE SIMILARITY
+    // 4. MOVIE SIMILARITY
+    //    TF-IDF + COSINE SIMILARITY
     // =========================================================
 
     private static void similaritySearch()
@@ -474,10 +533,11 @@ public class MovieFlix {
                 movies[second - 1];
 
         /*
-         * Create the complete movie corpus.
-         * TF-IDF must calculate IDF using
-         * the complete corpus, not only
-         * the two selected movies.
+         * Build the complete movie corpus.
+         *
+         * TF-IDF should calculate IDF using
+         * all movies, not only the two selected
+         * movies.
          */
         String[] corpus =
                 new String[movies.length];
@@ -557,6 +617,10 @@ public class MovieFlix {
         int limit =
                 movies.length;
 
+        /*
+         * Display only the first 30 movies
+         * when selecting movies for similarity.
+         */
         if (limit > 30) {
 
             limit = 30;
