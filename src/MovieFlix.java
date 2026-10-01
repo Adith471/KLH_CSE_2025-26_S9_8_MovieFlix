@@ -66,8 +66,7 @@ public class MovieFlix {
                 break;
             }
 
-            choice =
-                    choice.trim();
+            choice = choice.trim();
 
             if (choice.equals("1")) {
 
@@ -79,7 +78,7 @@ public class MovieFlix {
 
             } else if (choice.equals("3")) {
 
-                fuzzySearch();
+                levenshteinDistance();
 
             } else if (choice.equals("4")) {
 
@@ -127,7 +126,7 @@ public class MovieFlix {
         );
 
         System.out.println(
-                "3. Fuzzy Movie Search"
+                "3. Levenshtein Edit Distance"
         );
 
         System.out.println(
@@ -150,6 +149,10 @@ public class MovieFlix {
                 "Enter your choice: "
         );
     }
+
+    // =====================================================
+    // 1. KMP SEARCH
+    // =====================================================
 
     private static void kmpSearch()
             throws IOException {
@@ -177,8 +180,7 @@ public class MovieFlix {
             return;
         }
 
-        pattern =
-                pattern.trim();
+        pattern = pattern.trim();
 
         int matches = 0;
 
@@ -225,6 +227,10 @@ public class MovieFlix {
         );
     }
 
+    // =====================================================
+    // 2. AHO-CORASICK SEARCH
+    // =====================================================
+
     private static void ahoSearch()
             throws IOException {
 
@@ -264,7 +270,6 @@ public class MovieFlix {
                     patterns[i].trim();
 
             if (!patterns[i].isEmpty()) {
-
                 validPatterns++;
             }
         }
@@ -322,111 +327,72 @@ public class MovieFlix {
         );
     }
 
-    private static void fuzzySearch()
+    // =====================================================
+    // 3. LEVENSHTEIN EDIT DISTANCE
+    // =====================================================
+
+    private static void levenshteinDistance()
             throws IOException {
 
         System.out.println();
 
         System.out.println(
-                "========== LEVENSHTEIN FUZZY SEARCH =========="
+                "========== LEVENSHTEIN EDIT DISTANCE =========="
         );
 
         System.out.print(
-                "Enter movie title: "
+                "Enter first string: "
         );
 
-        String query =
+        String first =
                 input.readLine();
-
-        if (query == null
-                || query.trim().isEmpty()) {
-
-            System.out.println(
-                    "Movie title cannot be empty."
-            );
-
-            return;
-        }
-
-        query =
-                query.trim();
 
         System.out.print(
-                "Maximum edit distance (example: 3): "
+                "Enter second string: "
         );
 
-        String distanceInput =
+        String second =
                 input.readLine();
 
-        int maxDistance;
-
-        try {
-
-            maxDistance =
-                    Integer.parseInt(
-                            distanceInput.trim()
-                    );
-
-        } catch (Exception e) {
+        if (first == null
+                || second == null) {
 
             System.out.println(
-                    "Please enter a valid number."
+                    "Invalid input."
             );
 
             return;
         }
 
-        if (maxDistance < 0) {
-
-            System.out.println(
-                    "Distance cannot be negative."
-            );
-
-            return;
-        }
-
-        int matches = 0;
-
-        for (int i = 0;
-                i < movies.length;
-                i++) {
-
-            int distance =
-                    Levenshtein.distance(
-                            query,
-                            movies[i].getTitle()
-                    );
-
-            if (distance <= maxDistance) {
-
-                System.out.println();
-
-                System.out.println(
-                        (matches + 1)
-                        + ". "
-                        + movies[i].getTitle()
+        int distance =
+                Levenshtein.distance(
+                        first,
+                        second
                 );
-
-                System.out.println(
-                        "Edit distance: "
-                        + distance
-                );
-
-                System.out.println(
-                        movies[i]
-                );
-
-                matches++;
-            }
-        }
 
         System.out.println();
 
         System.out.println(
-                "Similar movies found: "
-                + matches
+                "First string:  "
+                + first
+        );
+
+        System.out.println(
+                "Second string: "
+                + second
+        );
+
+        System.out.println();
+
+        System.out.println(
+                "Edit Distance: "
+                + distance
         );
     }
+
+    // =====================================================
+    // 4. TF-IDF + COSINE SIMILARITY
+    // =====================================================
 
     private static void similaritySearch()
             throws IOException {
@@ -570,13 +536,16 @@ public class MovieFlix {
         );
     }
 
+    // =====================================================
+    // SHOW MOVIE NUMBERS
+    // =====================================================
+
     private static void showMovieNumbers() {
 
         int limit =
                 movies.length;
 
         if (limit > 30) {
-
             limit = 30;
         }
 
@@ -610,6 +579,10 @@ public class MovieFlix {
             );
         }
     }
+
+    // =====================================================
+    // DISPLAY ALL MOVIES
+    // =====================================================
 
     private static void showAllMovies() {
 
