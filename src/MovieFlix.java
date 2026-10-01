@@ -147,7 +147,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // KMP SEARCH
+    // 1. KMP SEARCH
     // =========================================================
 
     private static void kmpSearch()
@@ -208,7 +208,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // AHO-CORASICK SEARCH
+    // 2. AHO-CORASICK SEARCH
     // =========================================================
 
     private static void ahoSearch()
@@ -300,7 +300,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // LEVENSHTEIN FUZZY SEARCH
+    // 3. FUZZY SEARCH - LEVENSHTEIN
     // =========================================================
 
     private static void fuzzySearch()
@@ -323,39 +323,15 @@ public class MovieFlix {
             return;
         }
 
-        System.out.print(
-                "Maximum edit distance: "
-        );
+        query = query.trim();
 
-        String distanceInput =
-                input.readLine();
-
-        int maxDistance;
-
-        try {
-
-            maxDistance =
-                    Integer.parseInt(
-                            distanceInput.trim()
-                    );
-
-        } catch (Exception e) {
-
-            System.out.println(
-                    "Please enter a valid integer."
-            );
-
-            return;
-        }
-
-        if (maxDistance < 0) {
-
-            System.out.println(
-                    "Maximum distance cannot be negative."
-            );
-
-            return;
-        }
+        /*
+         * Maximum edit distance is controlled
+         * internally by the application.
+         *
+         * The client/user does NOT enter this value.
+         */
+        int maxDistance = 2;
 
         int matches = 0;
 
@@ -409,7 +385,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // TF-IDF + COSINE SIMILARITY
+    // 4. TF-IDF + COSINE SIMILARITY
     // =========================================================
 
     private static void similaritySearch()
@@ -497,7 +473,12 @@ public class MovieFlix {
         MovieRecord movie2 =
                 movies[second - 1];
 
-        // Create complete movie corpus
+        /*
+         * Create the complete movie corpus.
+         * TF-IDF must calculate IDF using
+         * the complete corpus, not only
+         * the two selected movies.
+         */
         String[] corpus =
                 new String[movies.length];
 
@@ -568,7 +549,7 @@ public class MovieFlix {
     }
 
     // =========================================================
-    // SHOW MOVIE NUMBERS
+    // DISPLAY MOVIE NUMBERS
     // =========================================================
 
     private static void showMovieNumbers() {
