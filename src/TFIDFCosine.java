@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class TFIDFCosine {
 
     private static String[] tokenize(
@@ -7,59 +9,24 @@ public class TFIDFCosine {
             return new String[0];
         }
 
-        text =
-                text.toLowerCase();
+        text = text.toLowerCase();
 
         String[] temp =
                 text.split("[^a-z0-9]+");
 
-        int count = 0;
+        ArrayList<String> words =
+                new ArrayList<>();
 
-        for (int i = 0;
-                i < temp.length;
-                i++) {
+        for (String word : temp) {
 
-            if (temp[i].length() > 0) {
+            if (!word.isEmpty()) {
 
-                count++;
+                words.add(word);
             }
         }
 
-        String[] result =
-                new String[count];
-
-        int index = 0;
-
-        for (int i = 0;
-                i < temp.length;
-                i++) {
-
-            if (temp[i].length() > 0) {
-
-                result[index++] =
-                        temp[i];
-            }
-        }
-
-        return result;
-    }
-
-    private static boolean contains(
-            String[] array,
-            int length,
-            String word) {
-
-        for (int i = 0;
-                i < length;
-                i++) {
-
-            if (array[i].equals(word)) {
-
-                return true;
-            }
-        }
-
-        return false;
+        return words.toArray(
+                new String[0]);
     }
 
     private static int countOccurrences(
@@ -68,11 +35,9 @@ public class TFIDFCosine {
 
         int count = 0;
 
-        for (int i = 0;
-                i < words.length;
-                i++) {
+        for (String current : words) {
 
-            if (words[i].equals(word)) {
+            if (current.equals(word)) {
 
                 count++;
             }
@@ -81,9 +46,16 @@ public class TFIDFCosine {
         return count;
     }
 
-    private static double termFrequency(
-            String[] words,
+    private static boolean contains(
+            Set<String> set,
             String word) {
+
+        return set.contains(word);
+    }
+
+    private static double calculateTF(
+            String[] words,
+            String term) {
 
         if (words.length == 0) {
             return 0.0;
@@ -92,39 +64,94 @@ public class TFIDFCosine {
         int count =
                 countOccurrences(
                         words,
-                        word
-                );
+                        term);
 
         return (double) count
                 / words.length;
     }
 
-    private static double inverseDocumentFrequency(
-            int documentCount,
-            int documentFrequency) {
+    private static int documentFrequency(
+            String term,
+            List<String[]> documents) {
 
-        if (documentCount <= 0) {
+        int count = 0;
+
+        for (String[] document :
+                documents) {
+
+            Set<String> uniqueWords =
+                    new HashSet<>(
+                            Arrays.asList(document));
+
+            if (contains(
+                    uniqueWords,
+                    term)) {
+
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static double calculateIDF(
+            String term,
+            List<String[]> documents) {
+
+        int totalDocuments =
+                documents.size();
+
+        int df =
+                documentFrequency(
+                        term,
+                        documents);
+
+        if (df == 0) {
             return 0.0;
         }
 
         /*
          * Smoothed IDF:
          *
-         * IDF = log((N + 1) / (DF + 1)) + 1
+         * log((N + 1) / (df + 1)) + 1
          *
-         * This prevents common words from
-         * receiving zero weight.
+         * This avoids zero/undefined values.
          */
-
         return Math.log(
-                ((double) documentCount + 1.0)
-                / ((double) documentFrequency + 1.0)
+                (double) (totalDocuments + 1)
+                        / (df + 1)
         ) + 1.0;
     }
 
     public static double cosineSimilarity(
             String document1,
-            String document2) {
+            String document2,
+            String[] corpus) {
+
+        if (document1 == null
+                || document2 == null) {
+
+            return 0.0;
+        }
+
+        if (corpus == null
+                || corpus.length == 0) {
+
+            return cosineSimilarityUsingTwoDocuments(
+                    document1,
+                    document2
+            );
+        }
+
+        List<String[]> documents =
+                new ArrayList<>();
+
+        for (String document : corpus) {
+
+            documents.add(
+                    tokenize(document)
+            );
+        }
 
         String[] words1 =
                 tokenize(document1);
@@ -132,47 +159,14 @@ public class TFIDFCosine {
         String[] words2 =
                 tokenize(document2);
 
-        if (words1.length == 0
-                || words2.length == 0) {
+        Set<String> vocabulary =
+                new HashSet<>();
 
-            return 0.0;
-        }
+        vocabulary.addAll(
+                Arrays.asList(words1));
 
-        String[] vocabulary =
-                new String[
-                        words1.length
-                        + words2.length
-                ];
-
-        int vocabSize = 0;
-
-        for (int i = 0;
-                i < words1.length;
-                i++) {
-
-            if (!contains(
-                    vocabulary,
-                    vocabSize,
-                    words1[i])) {
-
-                vocabulary[vocabSize++] =
-                        words1[i];
-            }
-        }
-
-        for (int i = 0;
-                i < words2.length;
-                i++) {
-
-            if (!contains(
-                    vocabulary,
-                    vocabSize,
-                    words2[i])) {
-
-                vocabulary[vocabSize++] =
-                        words2[i];
-            }
-        }
+        vocabulary.addAll(
+                Arrays.asList(words2));
 
         double dotProduct = 0.0;
 
@@ -180,50 +174,23 @@ public class TFIDFCosine {
 
         double magnitude2 = 0.0;
 
-        int documentCount = 2;
-
-        for (int i = 0;
-                i < vocabSize;
-                i++) {
-
-            String word =
-                    vocabulary[i];
-
-            int df = 0;
-
-            if (contains(
-                    words1,
-                    words1.length,
-                    word)) {
-
-                df++;
-            }
-
-            if (contains(
-                    words2,
-                    words2.length,
-                    word)) {
-
-                df++;
-            }
-
-            double idf =
-                    inverseDocumentFrequency(
-                            documentCount,
-                            df
-                    );
+        for (String word :
+                vocabulary) {
 
             double tf1 =
-                    termFrequency(
+                    calculateTF(
                             words1,
-                            word
-                    );
+                            word);
 
             double tf2 =
-                    termFrequency(
+                    calculateTF(
                             words2,
-                            word
-                    );
+                            word);
+
+            double idf =
+                    calculateIDF(
+                            word,
+                            documents);
 
             double weight1 =
                     tf1 * idf;
@@ -247,10 +214,94 @@ public class TFIDFCosine {
             return 0.0;
         }
 
-        return dotProduct
-                / (
-                    Math.sqrt(magnitude1)
-                    * Math.sqrt(magnitude2)
+        return dotProduct /
+                (
+                        Math.sqrt(magnitude1)
+                                * Math.sqrt(magnitude2)
+                );
+    }
+
+    /*
+     * Compatibility method.
+     *
+     * If another part of the program calls:
+     *
+     * cosineSimilarity(document1, document2)
+     *
+     * it will still work.
+     */
+    public static double cosineSimilarity(
+            String document1,
+            String document2) {
+
+        return cosineSimilarityUsingTwoDocuments(
+                document1,
+                document2
+        );
+    }
+
+    private static double cosineSimilarityUsingTwoDocuments(
+            String document1,
+            String document2) {
+
+        String[] words1 =
+                tokenize(document1);
+
+        String[] words2 =
+                tokenize(document2);
+
+        Set<String> vocabulary =
+                new HashSet<>();
+
+        vocabulary.addAll(
+                Arrays.asList(words1));
+
+        vocabulary.addAll(
+                Arrays.asList(words2));
+
+        double dotProduct = 0.0;
+
+        double magnitude1 = 0.0;
+
+        double magnitude2 = 0.0;
+
+        for (String word :
+                vocabulary) {
+
+            double tf1 =
+                    calculateTF(
+                            words1,
+                            word);
+
+            double tf2 =
+                    calculateTF(
+                            words2,
+                            word);
+
+            double weight1 = tf1;
+
+            double weight2 = tf2;
+
+            dotProduct +=
+                    weight1 * weight2;
+
+            magnitude1 +=
+                    weight1 * weight1;
+
+            magnitude2 +=
+                    weight2 * weight2;
+        }
+
+        if (magnitude1 == 0.0
+                || magnitude2 == 0.0) {
+
+            return 0.0;
+        }
+
+        return dotProduct /
+                (
+                        Math.sqrt(magnitude1)
+                                * Math.sqrt(magnitude2)
                 );
     }
 }
