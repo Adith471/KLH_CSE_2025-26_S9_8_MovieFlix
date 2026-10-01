@@ -33,12 +33,16 @@ public class Levenshtein {
                 } else {
 
                     int insert = dp[i][j - 1];
+
                     int delete = dp[i - 1][j];
+
                     int replace = dp[i - 1][j - 1];
 
                     dp[i][j] = 1 +
-                            Math.min(insert,
-                            Math.min(delete, replace));
+                            Math.min(
+                                    insert,
+                                    Math.min(delete, replace)
+                            );
                 }
             }
         }
