@@ -5,7 +5,12 @@ public class MovieRecord {
     private String genre;
     private String keywords;
 
-    public MovieRecord(String title, String actors, String genre, String keywords) {
+    public MovieRecord(
+            String title,
+            String actors,
+            String genre,
+            String keywords) {
+
         this.title = title;
         this.actors = actors;
         this.genre = genre;
@@ -29,18 +34,33 @@ public class MovieRecord {
     }
 
     public String getFullText() {
-        return title + " " + actors + " " + genre + " " + keywords;
+
+        return title + " "
+                + actors + " "
+                + genre + " "
+                + keywords;
     }
 
     public boolean contains(String pattern) {
-        String text = getFullText().toLowerCase();
-        String p = pattern.toLowerCase();
 
-        return text.contains(p);
+        if (pattern == null) {
+            return false;
+        }
+
+        return getFullText()
+                .toLowerCase()
+                .contains(pattern.toLowerCase());
     }
 
     @Override
     public String toString() {
-        return title + " | " + actors + " | " + genre + " | " + keywords;
+
+        return title
+                + " | "
+                + actors
+                + " | "
+                + genre
+                + " | "
+                + keywords;
     }
 }
