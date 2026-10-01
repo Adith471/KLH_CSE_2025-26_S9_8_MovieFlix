@@ -1,60 +1,48 @@
 public class Levenshtein {
 
+    // Calculate edit distance using Dynamic Programming
     public static int distance(String a, String b) {
-
-        if (a == null) {
-            a = "";
-        }
-
-        if (b == null) {
-            b = "";
-        }
 
         a = a.toLowerCase();
         b = b.toLowerCase();
 
-        int n = a.length();
-        int m = b.length();
+        int m = a.length();
+        int n = b.length();
 
-        int[][] dp = new int[n + 1][m + 1];
+        // DP table
+        int[][] dp = new int[m + 1][n + 1];
 
-        // Convert empty string to first string
-        for (int i = 0; i <= n; i++) {
+        // Convert empty string to a string
+        for (int i = 0; i <= m; i++) {
             dp[i][0] = i;
         }
 
-        // Convert empty string to second string
-        for (int j = 0; j <= m; j++) {
+        for (int j = 0; j <= n; j++) {
             dp[0][j] = j;
         }
 
-        // Fill the DP table
-        for (int i = 1; i <= n; i++) {
+        // Fill DP table
+        for (int i = 1; i <= m; i++) {
 
-            for (int j = 1; j <= m; j++) {
-
-                int cost;
+            for (int j = 1; j <= n; j++) {
 
                 if (a.charAt(i - 1) == b.charAt(j - 1)) {
-                    cost = 0;
+
+                    dp[i][j] = dp[i - 1][j - 1];
+
                 } else {
-                    cost = 1;
+
+                    int insert = dp[i][j - 1];
+                    int delete = dp[i - 1][j];
+                    int replace = dp[i - 1][j - 1];
+
+                    dp[i][j] = 1 +
+                            Math.min(insert,
+                            Math.min(delete, replace));
                 }
-
-                int deletion = dp[i - 1][j] + 1;
-
-                int insertion = dp[i][j - 1] + 1;
-
-                int substitution =
-                        dp[i - 1][j - 1] + cost;
-
-                dp[i][j] = Math.min(
-                        Math.min(deletion, insertion),
-                        substitution
-                );
             }
         }
 
-        return dp[n][m];
+        return dp[m][n];
     }
 }
