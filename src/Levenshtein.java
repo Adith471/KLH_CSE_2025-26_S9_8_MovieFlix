@@ -1,52 +1,89 @@
 public class Levenshtein {
 
-    // Calculate edit distance using Dynamic Programming
-    public static int distance(String a, String b) {
+    public static int distance(
+            String a,
+            String b) {
+
+        if (a == null) {
+            a = "";
+        }
+
+        if (b == null) {
+            b = "";
+        }
 
         a = a.toLowerCase();
         b = b.toLowerCase();
 
-        int m = a.length();
-        int n = b.length();
+        int n = a.length();
+        int m = b.length();
 
-        // DP table
-        int[][] dp = new int[m + 1][n + 1];
+        int[][] dp =
+                new int[n + 1][m + 1];
 
-        // Convert empty string to a string
-        for (int i = 0; i <= m; i++) {
+        // Convert a prefix of a to empty string
+        for (int i = 0; i <= n; i++) {
+
             dp[i][0] = i;
         }
 
-        for (int j = 0; j <= n; j++) {
+        // Convert empty string to prefix of b
+        for (int j = 0; j <= m; j++) {
+
             dp[0][j] = j;
         }
 
-        // Fill DP table
-        for (int i = 1; i <= m; i++) {
+        // Dynamic Programming
+        for (int i = 1; i <= n; i++) {
 
-            for (int j = 1; j <= n; j++) {
+            for (int j = 1; j <= m; j++) {
 
-                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                int cost;
 
-                    dp[i][j] = dp[i - 1][j - 1];
+                if (a.charAt(i - 1)
+                        == b.charAt(j - 1)) {
+
+                    cost = 0;
 
                 } else {
 
-                    int insert = dp[i][j - 1];
-
-                    int delete = dp[i - 1][j];
-
-                    int replace = dp[i - 1][j - 1];
-
-                    dp[i][j] = 1 +
-                            Math.min(
-                                    insert,
-                                    Math.min(delete, replace)
-                            );
+                    cost = 1;
                 }
+
+                int deletion =
+                        dp[i - 1][j] + 1;
+
+                int insertion =
+                        dp[i][j - 1] + 1;
+
+                int substitution =
+                        dp[i - 1][j - 1]
+                                + cost;
+
+                dp[i][j] =
+                        Math.min(
+                                Math.min(
+                                        deletion,
+                                        insertion
+                                ),
+                                substitution
+                        );
             }
         }
 
-        return dp[m][n];
+        return dp[n][m];
+    }
+
+    public static boolean isSimilar(
+            String a,
+            String b,
+            int maximumDistance) {
+
+        if (maximumDistance < 0) {
+            return false;
+        }
+
+        return distance(a, b)
+                <= maximumDistance;
     }
 }
