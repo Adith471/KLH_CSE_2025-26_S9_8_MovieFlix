@@ -33,23 +33,19 @@ public class MovieFlix {
                         corpusPath
                 );
 
-        System.out.println();
-
         System.out.println(
                 "Movies loaded: "
-                + movies.length
+                        + movies.length
         );
 
         if (movies.length == 0) {
-
-            System.out.println();
 
             System.out.println(
                     "No movie records found."
             );
 
             System.out.println(
-                    "Make sure the docs folder contains .txt files."
+                    "Check the docs folder."
             );
 
             return;
@@ -78,7 +74,7 @@ public class MovieFlix {
 
             } else if (choice.equals("3")) {
 
-                levenshteinDistance();
+                fuzzySearch();
 
             } else if (choice.equals("4")) {
 
@@ -103,7 +99,7 @@ public class MovieFlix {
                 System.out.println();
 
                 System.out.println(
-                        "Invalid choice. Please enter 0 to 5."
+                        "Invalid choice. Please enter 0-5."
                 );
             }
         }
@@ -126,7 +122,7 @@ public class MovieFlix {
         );
 
         System.out.println(
-                "3. Levenshtein Edit Distance"
+                "3. Fuzzy Movie Search"
         );
 
         System.out.println(
@@ -150,18 +146,12 @@ public class MovieFlix {
         );
     }
 
-    // =====================================================
-    // 1. KMP SEARCH
-    // =====================================================
+    // =========================================================
+    // KMP SEARCH
+    // =========================================================
 
     private static void kmpSearch()
             throws IOException {
-
-        System.out.println();
-
-        System.out.println(
-                "========== KMP PATTERN SEARCH =========="
-        );
 
         System.out.print(
                 "Enter movie title, actor, genre or keyword: "
@@ -180,31 +170,21 @@ public class MovieFlix {
             return;
         }
 
-        pattern = pattern.trim();
-
         int matches = 0;
 
         long start =
                 System.nanoTime();
 
-        for (int i = 0;
-                i < movies.length;
-                i++) {
-
-            String text =
-                    movies[i].getFullText();
+        for (MovieRecord movie :
+                movies) {
 
             if (KMP.search(
-                    text,
+                    movie.getFullText(),
                     pattern)) {
 
                 System.out.println();
 
-                System.out.println(
-                        (matches + 1)
-                        + ". "
-                        + movies[i]
-                );
+                System.out.println(movie);
 
                 matches++;
             }
@@ -217,28 +197,22 @@ public class MovieFlix {
 
         System.out.println(
                 "Matches found: "
-                + matches
+                        + matches
         );
 
         System.out.println(
                 "Search time: "
-                + (end - start)
-                + " ns"
+                        + (end - start)
+                        + " ns"
         );
     }
 
-    // =====================================================
-    // 2. AHO-CORASICK SEARCH
-    // =====================================================
+    // =========================================================
+    // AHO-CORASICK SEARCH
+    // =========================================================
 
     private static void ahoSearch()
             throws IOException {
-
-        System.out.println();
-
-        System.out.println(
-                "====== AHO-CORASICK MULTI-KEYWORD SEARCH ======"
-        );
 
         System.out.print(
                 "Enter keywords separated by comma: "
@@ -263,13 +237,16 @@ public class MovieFlix {
         int validPatterns = 0;
 
         for (int i = 0;
-                i < patterns.length;
-                i++) {
+             i < patterns.length;
+             i++) {
 
             patterns[i] =
-                    patterns[i].trim();
+                    patterns[i]
+                            .trim()
+                            .toLowerCase();
 
             if (!patterns[i].isEmpty()) {
+
                 validPatterns++;
             }
         }
@@ -291,20 +268,15 @@ public class MovieFlix {
         long start =
                 System.nanoTime();
 
-        for (int i = 0;
-                i < movies.length;
-                i++) {
+        for (MovieRecord movie :
+                movies) {
 
             if (aho.search(
-                    movies[i].getFullText())) {
+                    movie.getFullText())) {
 
                 System.out.println();
 
-                System.out.println(
-                        (matches + 1)
-                        + ". "
-                        + movies[i]
-                );
+                System.out.println(movie);
 
                 matches++;
             }
@@ -317,91 +289,131 @@ public class MovieFlix {
 
         System.out.println(
                 "Matching records: "
-                + matches
+                        + matches
         );
 
         System.out.println(
                 "Search time: "
-                + (end - start)
-                + " ns"
+                        + (end - start)
+                        + " ns"
         );
     }
 
-    // =====================================================
-    // 3. LEVENSHTEIN EDIT DISTANCE
-    // =====================================================
+    // =========================================================
+    // LEVENSHTEIN FUZZY SEARCH
+    // =========================================================
 
-    private static void levenshteinDistance()
+    private static void fuzzySearch()
             throws IOException {
 
-        System.out.println();
-
-        System.out.println(
-                "========== LEVENSHTEIN EDIT DISTANCE =========="
-        );
-
         System.out.print(
-                "Enter first string: "
+                "Enter movie title: "
         );
 
-        String first =
+        String query =
                 input.readLine();
 
-        System.out.print(
-                "Enter second string: "
-        );
-
-        String second =
-                input.readLine();
-
-        if (first == null
-                || second == null) {
+        if (query == null
+                || query.trim().isEmpty()) {
 
             System.out.println(
-                    "Invalid input."
+                    "Movie title cannot be empty."
             );
 
             return;
         }
 
-        int distance =
-                Levenshtein.distance(
-                        first,
-                        second
+        System.out.print(
+                "Maximum edit distance: "
+        );
+
+        String distanceInput =
+                input.readLine();
+
+        int maxDistance;
+
+        try {
+
+            maxDistance =
+                    Integer.parseInt(
+                            distanceInput.trim()
+                    );
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Please enter a valid integer."
+            );
+
+            return;
+        }
+
+        if (maxDistance < 0) {
+
+            System.out.println(
+                    "Maximum distance cannot be negative."
+            );
+
+            return;
+        }
+
+        int matches = 0;
+
+        long start =
+                System.nanoTime();
+
+        for (MovieRecord movie :
+                movies) {
+
+            int distance =
+                    Levenshtein.distance(
+                            query,
+                            movie.getTitle()
+                    );
+
+            if (distance <= maxDistance) {
+
+                System.out.println();
+
+                System.out.println(
+                        "Title: "
+                                + movie.getTitle()
                 );
 
+                System.out.println(
+                        "Edit distance: "
+                                + distance
+                );
+
+                System.out.println(movie);
+
+                matches++;
+            }
+        }
+
+        long end =
+                System.nanoTime();
+
         System.out.println();
 
         System.out.println(
-                "First string:  "
-                + first
+                "Similar movies found: "
+                        + matches
         );
 
         System.out.println(
-                "Second string: "
-                + second
-        );
-
-        System.out.println();
-
-        System.out.println(
-                "Edit Distance: "
-                + distance
+                "Search time: "
+                        + (end - start)
+                        + " ns"
         );
     }
 
-    // =====================================================
-    // 4. TF-IDF + COSINE SIMILARITY
-    // =====================================================
+    // =========================================================
+    // TF-IDF + COSINE SIMILARITY
+    // =========================================================
 
     private static void similaritySearch()
             throws IOException {
-
-        System.out.println();
-
-        System.out.println(
-                "========== TF-IDF + COSINE SIMILARITY =========="
-        );
 
         if (movies.length < 2) {
 
@@ -414,43 +426,45 @@ public class MovieFlix {
 
         showMovieNumbers();
 
-        System.out.println();
-
         System.out.print(
                 "Enter first movie number: "
         );
 
-        String firstInput =
-                input.readLine();
-
-        System.out.print(
-                "Enter second movie number: "
-        );
-
-        String secondInput =
-                input.readLine();
-
         int first;
-        int second;
 
         try {
 
             first =
                     Integer.parseInt(
-                            firstInput.trim()
-                    );
-
-            second =
-                    Integer.parseInt(
-                            secondInput.trim()
+                            input.readLine().trim()
                     );
 
         } catch (Exception e) {
 
-            System.out.println();
+            System.out.println(
+                    "Invalid movie number."
+            );
+
+            return;
+        }
+
+        System.out.print(
+                "Enter second movie number: "
+        );
+
+        int second;
+
+        try {
+
+            second =
+                    Integer.parseInt(
+                            input.readLine().trim()
+                    );
+
+        } catch (Exception e) {
 
             System.out.println(
-                    "Please enter valid movie numbers."
+                    "Invalid movie number."
             );
 
             return;
@@ -461,8 +475,6 @@ public class MovieFlix {
                 || second < 1
                 || second > movies.length) {
 
-            System.out.println();
-
             System.out.println(
                     "Invalid movie number."
             );
@@ -471,8 +483,6 @@ public class MovieFlix {
         }
 
         if (first == second) {
-
-            System.out.println();
 
             System.out.println(
                     "Please select two different movies."
@@ -487,13 +497,26 @@ public class MovieFlix {
         MovieRecord movie2 =
                 movies[second - 1];
 
+        // Create complete movie corpus
+        String[] corpus =
+                new String[movies.length];
+
+        for (int i = 0;
+             i < movies.length;
+             i++) {
+
+            corpus[i] =
+                    movies[i].getFullText();
+        }
+
         long start =
                 System.nanoTime();
 
         double similarity =
                 TFIDFCosine.cosineSimilarity(
                         movie1.getFullText(),
-                        movie2.getFullText()
+                        movie2.getFullText(),
+                        corpus
                 );
 
         long end =
@@ -502,43 +525,51 @@ public class MovieFlix {
         System.out.println();
 
         System.out.println(
+                "======================================"
+        );
+
+        System.out.println(
+                "        MOVIE SIMILARITY RESULT"
+        );
+
+        System.out.println(
+                "======================================"
+        );
+
+        System.out.println(
                 "Movie 1: "
-                + movie1.getTitle()
+                        + movie1.getTitle()
         );
 
         System.out.println(
                 "Movie 2: "
-                + movie2.getTitle()
+                        + movie2.getTitle()
         );
-
-        System.out.println();
 
         System.out.printf(
                 "Cosine Similarity: %.4f%n",
                 similarity
         );
 
-        System.out.println(
-                "Similarity Percentage: "
-                + String.format(
-                        "%.2f",
-                        similarity * 100
-                )
-                + "%"
+        System.out.printf(
+                "Similarity Percentage: %.2f%%%n",
+                similarity * 100
         );
-
-        System.out.println();
 
         System.out.println(
                 "Calculation time: "
-                + (end - start)
-                + " ns"
+                        + (end - start)
+                        + " ns"
+        );
+
+        System.out.println(
+                "======================================"
         );
     }
 
-    // =====================================================
+    // =========================================================
     // SHOW MOVIE NUMBERS
-    // =====================================================
+    // =========================================================
 
     private static void showMovieNumbers() {
 
@@ -546,70 +577,48 @@ public class MovieFlix {
                 movies.length;
 
         if (limit > 30) {
+
             limit = 30;
         }
 
         System.out.println();
 
-        System.out.println(
-                "Available Movies:"
-        );
-
-        System.out.println();
-
         for (int i = 0;
-                i < limit;
-                i++) {
+             i < limit;
+             i++) {
 
             System.out.println(
                     (i + 1)
-                    + ". "
-                    + movies[i].getTitle()
+                            + ". "
+                            + movies[i].getTitle()
             );
         }
 
         if (movies.length > 30) {
 
-            System.out.println();
-
             System.out.println(
                     "... "
-                    + (movies.length - 30)
-                    + " more movies loaded."
+                            + (movies.length - 30)
+                            + " more movies loaded."
             );
         }
     }
 
-    // =====================================================
+    // =========================================================
     // DISPLAY ALL MOVIES
-    // =====================================================
+    // =========================================================
 
     private static void showAllMovies() {
 
-        System.out.println();
-
-        System.out.println(
-                "========== MOVIE DATABASE =========="
-        );
-
         for (int i = 0;
-                i < movies.length;
-                i++) {
-
-            System.out.println();
+             i < movies.length;
+             i++) {
 
             System.out.println(
                     (i + 1)
-                    + ". "
-                    + movies[i]
+                            + ". "
+                            + movies[i]
             );
         }
-
-        System.out.println();
-
-        System.out.println(
-                "Total movies: "
-                + movies.length
-        );
     }
 }
